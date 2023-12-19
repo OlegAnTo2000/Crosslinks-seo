@@ -178,14 +178,16 @@ class Crosslinks
 
         // Split Links Text by "---"
         $splitLinksArray = [];
-        foreach ($links as $key => $value) {
-            if (strpos($key, '---') !== false) {
-                $keys = explode('---', $key);
+        foreach ($links as $linkText => $linkValue) {
+            if (strpos($linkText, '---') !== false) {
+                $keys = explode('---', $linkText);
                 foreach ($keys as $newKey) {
-                    $splitLinksArray[$newKey] = str_replace($key,$newKey,$value);
+                    $splitLinksArray[$newKey]['html'] = str_replace($linkText,$newKey,$linkValue['html']);
+                    $splitLinksArray[$newKey]['url'] = $linkValue['url'];
                 }
             } else {
-                $outputArray[$newKey] = $value;
+                $splitLinksArray[$linkText]['html'] = $linkValue['html'];
+                $splitLinksArray[$linkText]['url'] = $linkValue['url'];
             }
         }
         $links = $splitLinksArray;
