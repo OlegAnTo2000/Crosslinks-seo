@@ -176,6 +176,20 @@ class Crosslinks
             $sections = [$text];
         }
 
+        // Split Links Text by "---"
+        $splitLinksArray = [];
+        foreach ($links as $key => $value) {
+            if (strpos($key, '---') !== false) {
+                $keys = explode('---', $key);
+                foreach ($keys as $newKey) {
+                    $splitLinksArray[$newKey] = str_replace($key,$newKey,$value);
+                }
+            } else {
+                $outputArray[$newKey] = $value;
+            }
+        }
+        $links = $splitLinksArray;
+
         // Mask all links first
         $maskStart = '<_^_>';
         $maskEnd = '<_$_>';
